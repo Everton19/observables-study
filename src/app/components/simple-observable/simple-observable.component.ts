@@ -17,8 +17,21 @@ export class SimpleObservableComponent implements OnInit {
     //   console.log('Observable value:', x);
     // });
 
-    this.subs = this.observableService.intervalObs().subscribe((x) => {
-      console.log(x);
+    // this.subs = this.observableService.intervalObs().subscribe((x) => {
+    //   console.log(x);
+    // });
+
+
+    this.observableService.getTodoInfos(1).subscribe({
+      next: (data) => {
+        console.log('Todo data:', data);
+      },
+      error: (error) => {
+        console.error('Error fetching todo:', error);
+      },
+      complete: () => {
+        console.log('Todo fetch complete');
+      }
     });
   }
 
