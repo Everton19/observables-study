@@ -13,4 +13,21 @@ export class ObservableService {
       observer.next('Simple Observable 3');
     })
   };
+
+  intervalObs(){
+    return new Observable((observer) => {
+      console.log('intervalObs');
+
+      const interval = setInterval(() => {
+        console.log('setInterval');
+        observer.next('intervalObs');
+      }, 2000);
+
+      return () => {
+        console.log('Interval cleared');
+        observer.complete();
+        clearInterval(interval);
+      };
+    });
+  }
 }
