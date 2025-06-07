@@ -1,10 +1,26 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+
+interface TodoResponse {
+  id: number;
+  title: string;
+  completed?: boolean;
+  userId?: number;
+}
+
+interface TodoInfo {
+  id: number;
+  title: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObservableService {
+  private readonly _httpClient = inject(HttpClient);
+  apiUrl = 'https://jsonplaceholder.typicode.com/todos/';
+
   simpleObs(){
     return new Observable<string>((observer) => {
       console.log('Observable started');
@@ -28,6 +44,42 @@ export class ObservableService {
         observer.complete();
         clearInterval(interval);
       };
+    });
+  }
+
+  getTodoInfos(id: number): Observable<TodoInfo> {
+    return this._httpClient.get<TodoResponse>(`${this.apiUrl}${id}`)
+      .pipe(
+        map((response) => {
+          const newTodo = {
+            id: response.id,
+            title: response.title,
+          }
+
+          return newTodo;
+        })
+      );
+  }
+
+  obs1(){
+    return new Observable((observer) => {
+      observer.next(1);
+      // observer.complete();
+
+      return () => {
+        console.log('Cleanup 1');
+      }
+    });
+  }
+
+  obs2(){
+    return new Observable((observer) => {
+      observer.next(2);
+      // observer.complete();
+
+      return () => {
+        console.log('Cleanup 2');
+      }
     });
   }
 }
