@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ObservableService } from './observable.service';
-import { Subscription, switchMap } from 'rxjs';
+import { Subscription, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-simple-observable',
@@ -38,11 +38,22 @@ export class SimpleObservableComponent implements OnInit {
     // });
 
     // SwitchMap example
+    // this.subsSwitchMap = this.observableService.obs1().pipe(
+    //   switchMap((valueObs1) => {
+    //     console.log('Value from obs1:', valueObs1);
+    //     return this.observableService.obs2();
+    //   })
+    // ).subscribe((valueObs2) => {
+    //   console.log('Value from obs2:', valueObs2);
+    // });
+
+    // Take example
     this.subsSwitchMap = this.observableService.obs1().pipe(
       switchMap((valueObs1) => {
         console.log('Value from obs1:', valueObs1);
         return this.observableService.obs2();
-      })
+      }),
+      take(1)
     ).subscribe((valueObs2) => {
       console.log('Value from obs2:', valueObs2);
     });
