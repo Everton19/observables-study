@@ -1,0 +1,9 @@
+<button (click)="sendObs(1)">Enviar 1</button>
+<button (click)="sendObs(2)">Enviar 2</button>
+<button (click)="sendObs(3)">Enviar 3</button>
+<br />
+<button (click)="showConsumer = true">Mostrar Componente</button>
+
+@if (showConsumer) {
+  <app-consumer />
+}
