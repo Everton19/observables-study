@@ -15,6 +15,8 @@ export class SimpleObservableComponent implements OnInit {
   private readonly observableService = inject(ObservableService);
 
   ngOnInit() {
+    this.flowObs();
+
     // this.observableService.simpleObs().subscribe((x) => {
     //   console.log('Observable value:', x);
     // });
@@ -48,15 +50,31 @@ export class SimpleObservableComponent implements OnInit {
     // });
 
     // Take example
-    this.subsSwitchMap = this.observableService.obs1().pipe(
-      switchMap((valueObs1) => {
-        console.log('Value from obs1:', valueObs1);
-        return this.observableService.obs2();
-      }),
-      take(1)
-    ).subscribe((valueObs2) => {
-      console.log('Value from obs2:', valueObs2);
+    // this.subsSwitchMap = this.observableService.obs1().pipe(
+    //   switchMap((valueObs1) => {
+    //     console.log('Value from obs1:', valueObs1);
+    //     return this.observableService.obs2();
+    //   }),
+    //   take(1)
+    // ).subscribe((valueObs2) => {
+    //   console.log('Value from obs2:', valueObs2);
+    // });
+  }
+
+  flowObs() {
+    // Javascipt roda todos os codigos síncronos antes de executar os assincronos
+    console.log('flowObs started');
+    // this.observableService.obs1().subscribe({
+    //   next: (value) => {
+    //     console.log('Value from obs1:', value);
+    //   },
+    // });
+    this.observableService.getTodoInfos(1).subscribe({
+      next: (data) => {
+        console.log('Todo data:', data);
+      }
     });
+    console.log('flowObs finished');
   }
 
   unsubscribeInterval() {
