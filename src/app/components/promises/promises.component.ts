@@ -11,8 +11,17 @@ export class PromisesComponent {
   private readonly promise = inject(PromisesService);
 
   ngOnInit(): void {
-    this.promise.simplePromise().then((value) => {
-      console.log(value);
-    });
+    //Testando resolved promise
+    // this.promise.simplePromise().then((value) => {
+    //   console.log(value);
+    // });
+
+    //Testando rejected promise
+    this.promise.rejectedPromise()
+        .then(() => { console.log('Resolved');})
+        .catch((error) => { console.error(error);})
+        .finally(() => {
+          console.log('Promise completed');
+        });
   }
 }

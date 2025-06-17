@@ -18,4 +18,13 @@ export class PromisesService {
       console.log('Promise finished');
     })
   }
+
+  rejectedPromise(){
+    return new Promise((resolve, reject) => {
+      console.log('Rejected Promise started');
+      reject(new Error('Promise rejected'));
+
+      console.log('Rejected Promise finished');
+    })
+  }
 }
